@@ -12,7 +12,7 @@ import org.springframework.web.client.RestTemplate;
 @CrossOrigin("*")
 public class ChatController {
 
-    @Value("${groq.api.key}")
+    @Value("${GROQ_API_KEY}")
     private String API_KEY;
 
     @PostMapping
