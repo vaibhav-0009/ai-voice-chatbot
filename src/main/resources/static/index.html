@@ -406,20 +406,19 @@
 
         try{
 
-            const response =
-                await fetch(
-                    "http://localhost:10000/chat",
-                    {
-                        method:"POST",
+         const response =
+    await fetch(
+        "/chat",
+        {
+            method:"POST",
 
-                        headers:{
-                            "Content-Type":"text/plain"
-                        },
+            headers:{
+                "Content-Type":"text/plain"
+            },
 
-                        body:text
-                    }
-                );
-
+            body:text
+        }
+    );
             const data =
                 await response.text();
 
