@@ -1,3 +1,4 @@
+
 package com.example.demo;
 
 import org.json.JSONArray;
@@ -21,7 +22,8 @@ public class ChatController {
         try {
             RestTemplate restTemplate = new RestTemplate();
 
-            String url = "https://api.groq.com/openai/v1/chat/completions";
+            String url =
+                "https://api.groq.com/openai/v1/chat/completions";
 
             HttpHeaders headers = new HttpHeaders();
             headers.setBearerAuth(API_KEY);
@@ -32,6 +34,18 @@ public class ChatController {
 
             JSONArray messages = new JSONArray();
 
+            JSONObject systemMessage = new JSONObject();
+            systemMessage.put("role", "system");
+            systemMessage.put(
+                "content",
+                "You are a helpful AI voice assistant. " +
+                "Reply naturally and directly. " +
+                "Do not generate HTML, webpages, or code " +
+                "unless explicitly requested. " +
+                "Do not wrap normal answers in Markdown code fences."
+            );
+            messages.put(systemMessage);
+
             JSONObject userMessage = new JSONObject();
             userMessage.put("role", "user");
             userMessage.put("content", message);
@@ -40,23 +54,22 @@ public class ChatController {
             body.put("messages", messages);
 
             HttpEntity<String> request =
-                    new HttpEntity<>(body.toString(), headers);
+                new HttpEntity<>(body.toString(), headers);
 
             ResponseEntity<String> response =
-                    restTemplate.exchange(
-                            url,
-                            HttpMethod.POST,
-                            request,
-                            String.class
-                    );
+                restTemplate.exchange(
+                    url,
+                    HttpMethod.POST,
+                    request,
+                    String.class
+                );
 
             JSONObject json = new JSONObject(response.getBody());
 
-            return json
-                    .getJSONArray("choices")
-                    .getJSONObject(0)
-                    .getJSONObject("message")
-                    .getString("content");
+            return json.getJSONArray("choices")
+                .getJSONObject(0)
+                .getJSONObject("message")
+                .getString("content");
 
         } catch (Exception e) {
             return "Error: " + e.getMessage();
