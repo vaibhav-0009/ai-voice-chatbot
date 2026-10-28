@@ -28,7 +28,7 @@ public class ChatController {
             headers.setContentType(MediaType.APPLICATION_JSON);
 
             JSONObject body = new JSONObject();
-            body.put("model", "llama-3.3-70b-versatile");
+            body.put("model", "openai/gpt-oss-120b");
 
             JSONArray messages = new JSONArray();
 
